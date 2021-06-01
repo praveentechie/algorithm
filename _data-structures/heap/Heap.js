@@ -23,10 +23,8 @@ class Heap {
   insertMaxHeap(value) {
     let newIndex = this.heap.length;
     this.heap[newIndex] = value;
-    this._fixMaxHeap(newIndex);
-  }
 
-  _fixMaxHeap(index) {
+    let index = newIndex;
     while(index > 1) {
       let parentIndex = this._getParent(index);
       if (this.heap[parentIndex] < this.heap[index]) {
@@ -38,6 +36,29 @@ class Heap {
     }
   }
 
+  popFromMaxHeap() {
+    this._swapElements(1, this.heap.length - 1);
+    let value = this.heap.pop();
+
+    this._fixMaxHeap(1);
+    return value;
+  }
+
+  _fixMaxHeap(index) {
+    let current = this.heap[index];
+    let leftChildIndex = this._getChild(index);
+    let left = this.heap[leftChildIndex];
+    let right = this.heap[leftChildIndex + 1];
+
+    if (left && current < left && (!right || right < left)) {
+      this._swapElements(index, leftChildIndex);
+      this._fixMaxHeap(leftChildIndex);
+    } else if (right && current < right && (!left || left < right)) {
+      this._swapElements(index, leftChildIndex + 1);
+      this._fixMaxHeap(leftChildIndex + 1);
+    }
+  }
+
   _swapElements(index1, index2) {
     let temp = this.heap[index1];
     this.heap[index1] = this.heap[index2];
@@ -46,6 +67,10 @@ class Heap {
 
   _getParent(index) {
     return Math.floor(index/2);
+  }
+
+  _getChild(index) {
+    return index * 2;
   }
 }
 
