@@ -1,10 +1,26 @@
-const BinaryTreeNode = require("./BinaryTreeNode");
+/**
+ * A Binary Search tree is a binary tree.
+ * The nodes that have lesser value are stored on the left while the nodes with a higher value are stored at the right.
+ */
+
+ class BinaryTreeNode {
+  constructor(value) {
+    this.value = value;
+    this.right = null;//another BinaryTreeNode
+    this.left = null;//another BinaryTreeNode
+  }
+}
 
 module.exports = class BinarySearchTree {
   constructor() {
     this.root = null;
   }
 
+  /**
+   * Insert a value into the BST
+   * @param {any} value value to be inserted into the tree
+   * @returns 
+   */
   insert(value) {
     let newNode = new BinaryTreeNode(value);
     if (!this.root) {
@@ -15,13 +31,47 @@ module.exports = class BinarySearchTree {
     this._insertNode(this.root, newNode);
   }
 
+  _insertNode(node, newNode) {
+    if (node.value > newNode.value) {
+      if (!node.left) {
+        node.left = newNode;
+      } else {
+        this._insertNode(node.left, newNode);
+      }
+    } else {
+      if (!node.right) {
+        node.right = newNode;
+      } else {
+        this._insertNode(node.right, newNode);
+      }
+    }
+  }
+
   remove(value) {
     this._removeNode(this.root, value);
   }
 
+  contains(value) {
+    if (!this.root) {
+      return false;
+    }
+
+    let temp = this.root;
+    while (temp) {
+      if (value < temp.value) {
+        temp = temp.left;
+      } else if (value > temp.value) {
+        temp = temp.right;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
   // traversal
   /**
-   * In-order(NLR):
+   * In-order(LNR):
    * Inorder traversal gives nodes in non-decreasing order
    * 1. Traverse the left subtree i.e perform inorder on left subtree
    * 2. Visit the root
@@ -72,22 +122,6 @@ module.exports = class BinarySearchTree {
       this._postorder(node.left);
       this._postorder(node.right);
       console.log(node.value);
-    }
-  }
-
-   _insertNode(node, newNode) {
-    if (node.value > newNode.value) {
-      if (!node.left) {
-        node.left = newNode;
-      } else {
-        this._insertNode(node.left, newNode);
-      }
-    } else {
-      if (!node.right) {
-        node.right = newNode;
-      } else {
-        this._insertNode(node.right, newNode);
-      }
     }
   }
 
