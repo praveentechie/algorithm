@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = class AdjacencyListGraph {
+class AdjacencyListGraph {
   constructor(noOfVertices) {
     this.noOfVertices = noOfVertices;
     this.adjacencyList = new Map();
@@ -45,3 +45,5 @@ module.exports = class AdjacencyListGraph {
     return false;
   }
 }
+
+module.exports = AdjacencyListGraph;

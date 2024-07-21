@@ -3,7 +3,7 @@
  * O(1) time complexity.
  */
 
-module.exports = class HashTable {
+class HashTable {
   constructor(size = 7) {
     this.dataMap = new Array(size);
   }
@@ -61,3 +61,5 @@ module.exports = class HashTable {
     return allKeys;
   }
 }
+
+module.exports = HashTable;

@@ -1,5 +1,25 @@
 'use strict';
 
+/**
+ * Merge sort is a classic divide-and-conquer sorting algorithm
+ * that divides the input array into two halves, recursively sorts each half,
+ * and then merges the sorted halves to produce a sorted array.
+ * It is known for its stable O(n log n) time complexity.
+ * It is widely used for sorting large datasets efficiently.
+ * 
+Algorithm:
+--------------
+Divide:
+- Divide the unsorted array into two halves recursively until each sub-array contains only one element.
+
+Conquer (Recursive Sorting):
+- Recursively sort each sub-array.
+- This step continues until all sub-arrays have been sorted into single-element arrays.
+
+Combine (Merge):
+- Merge the sorted sub-arrays (left and right halves) to produce the final sorted array.
+- This involves comparing elements from both halves and placing them in the correct order into a temporary array.
+ */
 module.exports = class MergeSort {
   constructor(list) {
     this.list = list;
@@ -20,27 +40,27 @@ module.exports = class MergeSort {
     return this.merge(this._sort(left), this._sort(right));
   }
 
-  merge(array1, array2) {
-    let combined = [], i = 0, j = 0;
+  merge(left, right) {
+    let combined = [], leftIndex = 0, rightIndex = 0;
 
-    while (i < array1.length && j < array2.length) {
-      if (array1[i] < array2[j]) {
-        combined.push(array1[i]);
-        i++;
+    while (leftIndex < left.length && rightIndex < right.length) {
+      if (left[leftIndex] < right[rightIndex]) {
+        combined.push(left[leftIndex]);
+        leftIndex++;
       } else {
-        combined.push(array2[j]);
-        j++;
+        combined.push(right[rightIndex]);
+        rightIndex++;
       }
     }
 
-    while (i < array1.length) {
-      combined.push(array1[i]);
-      i++;
+    while (leftIndex < left.length) {
+      combined.push(left[leftIndex]);
+      leftIndex++;
     }
 
-    while (j < array2.length) {
-      combined.push(array2[j]);
-      j++;
+    while (rightIndex < right.length) {
+      combined.push(right[rightIndex]);
+      rightIndex++;
     }
     return combined;
   }
